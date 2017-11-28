@@ -37,6 +37,9 @@ public:
 	virtual float getHeight() const;
 	virtual sf::Rect<float> getBoundingRect() const;
 
+protected:
+	sf::Sprite& getSprite();
+
 private:
 	sf::Sprite mSprite;
 	sf::Texture mImage;

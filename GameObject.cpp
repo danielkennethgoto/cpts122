@@ -238,4 +238,22 @@ sf::Rect<float> GameObject::getBoundingRect() const {
 	return (isLoaded()) ? mSprite.getGlobalBounds() : sf::Rect<float>();
 }
 
+/*************************************************************
+Function: getSprite()
+Date Created: November 28, 2017
+Date Last Modified: Novemver 28, 2017
+
+Description: protected function to allow inherited classes
+			 to access the sprite
+
+status: functional
+
+Input parameters:
+Returns: reference to sprite
+Preconditions:
+Postconditions:
+*************************************************************/
+sf::Sprite& GameObject::getSprite() {
+	return mSprite;
+}
 
