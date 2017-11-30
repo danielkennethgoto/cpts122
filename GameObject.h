@@ -14,6 +14,7 @@ Description: abstract class from which all game objects must derive
 
 status: functional
 *******************************************************************************************/
+#pragma once
 #include <SFML/Graphics.hpp>
 
 using std::string;
@@ -21,7 +22,7 @@ using std::map;
 
 class GameObject {
 public:
-	GameObject();
+	GameObject(string fileName);
 	~GameObject();
 
 	virtual void load();
