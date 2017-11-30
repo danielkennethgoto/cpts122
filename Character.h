@@ -10,8 +10,10 @@ public:
 
 private:
 	float timeSinceJumpStart;
+	bool jump;
 	bool isJumping;
 	float velocityY;
+	float deltaY;
 	const float jumpVelocity = -20;
 	const float acceleration = 50;
 
