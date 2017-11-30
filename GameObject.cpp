@@ -14,8 +14,8 @@ Returns:
 Preconditions:
 Postconditions: 
 *************************************************************/
-GameObject::GameObject()
-	: mIsLoaded{false} {
+GameObject::GameObject(string imgFile)
+	: mIsLoaded{ false }, mFileName{ imgFile } {
 
 }
 
