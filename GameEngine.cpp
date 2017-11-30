@@ -62,10 +62,21 @@ void GameEngine::startGame() {
 	}
 
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Hacker Man!");
-	window.setFramerateLimit(60);
+	//window.setFramerateLimit(60);
 	//allocate objects
+	Character* character = new Character;
+	character->setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	gameObjectManager.add("character", character);
 
+	image.loadFromFile("plainBackground.png");
+	backgroundSprite.setTexture(image);
 
+	gameState = GameState::PLAYING;
+
+	while (!isExiting())
+	{
+		gameLoop();
+	}
 }
 
 /*************************************************************
@@ -88,6 +99,7 @@ void GameEngine::gameLoop() {
 	switch (gameState) {
 	case GameState::PLAYING:
 		window.clear();
+		window.draw(backgroundSprite);
 		gameObjectManager.updateAll(event);
 		//set camera positions to main character
 		gameObjectManager.drawAll(window);
@@ -119,6 +131,3 @@ Postconditions:
 bool GameEngine::isExiting() const {
 	return (GameState::EXITING == gameState) ? true : false;
 }
-
-
-

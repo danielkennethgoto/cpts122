@@ -15,10 +15,11 @@ status: coding
 #include <SFML/Graphics.hpp>
 #include "GameObjectManager.h"
 #include <cassert>
+#include "Character.h"
 
 #define	SET_SCREEN_WIDTH 1024
 #define SET_SCREEN_HEIGHT 768
-#define SET_GROUND 150
+#define SET_GROUND 553
 
 class GameEngine {
 public:
@@ -49,4 +50,7 @@ private:
 	sf::Event event;
 	GameObjectManager gameObjectManager;
 	//PauseMenu; once it's built
+
+	sf::Sprite backgroundSprite;
+	sf::Texture image;
 };
