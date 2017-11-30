@@ -66,6 +66,12 @@ void Character::update(float timeLastUpdate, sf::Event event, map<string, GameOb
 		deltaY = 0;
 	}
 
+	if (getBoundingRect().intersects(gameObjects.find("platform")->second->getBoundingRect()))
+	{
+		isJumping = false;
+		getSprite().setPosition(getSprite().getPosition().x, gameObjects.find("platform")->second->getBoundingRect().top - getHeight()/2);
+	}
+
 	getSprite().move(velocityX * timeLastUpdate, deltaY);
 
 	

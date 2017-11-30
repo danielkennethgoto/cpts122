@@ -68,6 +68,10 @@ void GameEngine::startGame() {
 	character->setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	gameObjectManager.add("character", character);
 
+	Platform* platform = new Platform;
+	platform->setPosition(SCREEN_WIDTH / 2 + 50, GROUND - 20);
+	gameObjectManager.add("platform", platform);
+
 	image.loadFromFile("plainBackground.png");
 	backgroundSprite.setTexture(image);
 

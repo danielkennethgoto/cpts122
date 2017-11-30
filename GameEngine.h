@@ -16,6 +16,7 @@ status: coding
 #include "GameObjectManager.h"
 #include <cassert>
 #include "Character.h"
+#include "Platform.h"
 
 #define	SET_SCREEN_WIDTH 1024
 #define SET_SCREEN_HEIGHT 768
