@@ -55,11 +55,11 @@ void GameObject::load() {
 	if (mImage.loadFromFile(mFileName)) //check if file successfully loaded
 	{
 		mSprite.setTexture(mImage);
-		mIsLoaded = false;
+		mIsLoaded = true;
 	}
 	else
 	{
-		mIsLoaded = true;
+		mIsLoaded = false;
 	}
 }
 
