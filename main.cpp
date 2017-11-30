@@ -1,3 +1,4 @@
+//this is a test to make sure sfml is functioning
 #include <SFML/Graphics.hpp>
 
 int main()
