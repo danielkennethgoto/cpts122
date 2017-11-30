@@ -17,7 +17,7 @@ Postconditions:
 GameEngine::GameEngine()
 	: gameState {GameState::UNINITIALIZED}
 {
-
+	
 }
 
 /*************************************************************
@@ -89,6 +89,7 @@ void GameEngine::gameLoop() {
 	case GameState::PLAYING:
 		window.clear();
 		gameObjectManager.updateAll(event);
+		//set camera positions to main character
 		gameObjectManager.drawAll(window);
 		window.display();
 		break;
