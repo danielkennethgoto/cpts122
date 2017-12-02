@@ -65,7 +65,7 @@ void GameEngine::startGame() {
 	//window.setFramerateLimit(60);
 	//allocate objects
 	Character* character = new Character;
-	character->setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	character->setPosition(character->getWidth() * 2, SCREEN_HEIGHT / 2);
 	gameObjectManager.add("character", character);
 
 	Platform* platform = new Platform;
