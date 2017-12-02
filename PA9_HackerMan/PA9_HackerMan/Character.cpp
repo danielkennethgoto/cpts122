@@ -13,6 +13,7 @@ Character::Character()
 {
 	load();
 	getSprite().setOrigin(getSprite().getGlobalBounds().width / 2, getSprite().getGlobalBounds().height / 2);
+	getSprite().setScale(2, 2);
 }
 
 void Character::update(float timeLastUpdate, sf::Event event, map<string, GameObject*> gameObjects) {

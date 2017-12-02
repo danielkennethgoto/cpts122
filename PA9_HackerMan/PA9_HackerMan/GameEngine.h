@@ -20,7 +20,7 @@ status: coding
 
 #define	SET_SCREEN_WIDTH 1024
 #define SET_SCREEN_HEIGHT 768
-#define SET_GROUND 553
+#define SET_GROUND 500
 
 class GameEngine {
 public:
@@ -48,6 +48,7 @@ private:
 
 	GameState gameState;
 	sf::RenderWindow window;
+	sf::View view;
 	sf::Event event;
 	GameObjectManager gameObjectManager;
 	//PauseMenu; once it's built

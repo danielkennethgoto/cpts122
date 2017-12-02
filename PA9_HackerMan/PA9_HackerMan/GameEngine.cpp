@@ -17,7 +17,7 @@ Postconditions:
 GameEngine::GameEngine()
 	: gameState {GameState::UNINITIALIZED}
 {
-	
+
 }
 
 /*************************************************************
@@ -76,7 +76,7 @@ void GameEngine::startGame() {
 	platform->setPosition(gameObjectManager.get("platform")->getPosition().x + 150, GROUND - 100);
 	gameObjectManager.add("platform2", platform);
 
-	image.loadFromFile("plainBackground.png");
+	image.loadFromFile("electronicBackground.png");
 	backgroundSprite.setTexture(image);
 
 	gameState = GameState::PLAYING;
@@ -110,6 +110,13 @@ void GameEngine::gameLoop() {
 		window.draw(backgroundSprite);
 		gameObjectManager.updateAll(event);
 		//set camera positions to main character
+		if (gameObjectManager.get("character") != nullptr)
+		{
+			if (gameObjectManager.get("character")->getPosition().x > 175)
+			{
+				window.setView(sf::View(sf::Vector2f(gameObjectManager.get("character")->getPosition().x + 350, window.getSize().y / 2), sf::Vector2f(window.getSize())));
+			}
+		}
 		gameObjectManager.drawAll(window);
 		window.display();
 		break;
