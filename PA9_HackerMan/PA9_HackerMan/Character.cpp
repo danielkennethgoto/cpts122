@@ -69,26 +69,34 @@ void Character::update(float timeLastUpdate, sf::Event event, map<string, GameOb
 	}
 
 	//if jumping onto platform
-	if (getBoundingRect().intersects(platform->getBoundingRect()))
+	for (int i = 0; i < 2; i++)
 	{
-		if (getPosition().y + getHeight() / 2 < platform->getBoundingRect().top + platform->getHeight())
+		if (getBoundingRect().intersects(platform->getBoundingRect()))
 		{
-			setPosition(getPosition().x, platform->getBoundingRect().top - getHeight() / 2);
-			freeFallTime = 0;
-			vy0 = 0;
-			deltaY = 0;
-		}
-		else
-		{
-			if (velocityX > 0 && getPosition().x < platform->getPosition().x)
+			if (getPosition().y + getHeight() / 2 <= platform->getBoundingRect().top + platform->getHeight())
 			{
-				setPosition(platform->getPosition().x - platform->getWidth() / 2 - getWidth() / 2, getPosition().y);
+				setPosition(getPosition().x, platform->getBoundingRect().top - getHeight() / 2);
+				freeFallTime = 0;
+				vy0 = 0;
+				deltaY = 0;
 			}
-			if (velocityX < 0 && getPosition().x > platform->getPosition().x)
+			else if (getPosition().y - getHeight()/2 > platform->getBoundingRect().top + platform->getHeight())
 			{
-				setPosition(platform->getPosition().x + platform->getWidth() / 2 + getWidth() / 2, getPosition().y);
+
+			}
+			else
+			{
+				if (velocityX > 0 && getPosition().x < platform->getPosition().x)
+				{
+					setPosition(platform->getPosition().x - platform->getWidth() / 2 - getWidth() / 2, getPosition().y);
+				}
+				if (velocityX < 0 && getPosition().x > platform->getPosition().x)
+				{
+					setPosition(platform->getPosition().x + platform->getWidth() / 2 + getWidth() / 2, getPosition().y);
+				}
 			}
 		}
+		platform = gameObjects.find("platform2")->second;
 	}
 
 	getSprite().move(velocityX * timeLastUpdate, deltaY);
