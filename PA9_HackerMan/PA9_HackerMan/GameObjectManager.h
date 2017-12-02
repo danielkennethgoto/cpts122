@@ -17,28 +17,31 @@ status: functional
 *******************************************************************************************/
 #pragma once
 #include "GameObject.h"
+using std::string;
+using std::map;
+using std::pair;
 
 class GameObjectManager {
 public:
 	GameObjectManager();
 	~GameObjectManager();
 
-	void add(std::string name, GameObject* gameObject);
-	void remove(std::string name);
-	GameObject* get(std::string name) const;
+	void add(string name, string type, GameObject* gameObject);
+	void remove(string name);
+	GameObject* get(string name) const;
 	int getObjectCount() const;
 
 	void drawAll(sf::RenderWindow &window);
 	void updateAll(sf::Event &event);
 private:
-	std::map<std::string, GameObject*> gameObjects;
+	std::map<string, pair<string, GameObject*>> gameObjects;
 	sf::Clock mTimeSinceLastUpdate;
 
 	struct GameObjectDeallocator //helper functor for destructor
 	{
-		void operator()(const std::pair<std::string, GameObject*> &pair) const
+		void operator()(const pair<string, pair<string, GameObject*>> &pair) const
 		{
-			delete pair.second;
+			delete pair.second.second;
 		}
 	};
 };

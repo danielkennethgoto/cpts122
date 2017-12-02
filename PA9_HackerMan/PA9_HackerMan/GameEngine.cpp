@@ -62,19 +62,18 @@ void GameEngine::startGame() {
 	}
 
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Hacker Man!");
-	//window.setFramerateLimit(60);
 	//allocate objects
 	Character* character = new Character;
 	character->setPosition(character->getWidth() * 2, SCREEN_HEIGHT / 2);
-	gameObjectManager.add("character", character);
+	gameObjectManager.add("player1", "character", character);
 
 	Platform* platform = new Platform;
 	platform->setPosition(SCREEN_WIDTH / 2, GROUND - 50);
-	gameObjectManager.add("platform", platform);
+	gameObjectManager.add("platform1", "platform", platform);
 
 	platform = new Platform;
-	platform->setPosition(gameObjectManager.get("platform")->getPosition().x + 150, GROUND - 100);
-	gameObjectManager.add("platform2", platform);
+	platform->setPosition(gameObjectManager.get("platform1")->getPosition().x + 150, GROUND - 100);
+	gameObjectManager.add("platform2", "platform", platform);
 
 	image.loadFromFile("electronicBackground.png");
 	backgroundSprite.setTexture(image);
@@ -110,11 +109,11 @@ void GameEngine::gameLoop() {
 		window.draw(backgroundSprite);
 		gameObjectManager.updateAll(event);
 		//set camera positions to main character
-		if (gameObjectManager.get("character") != nullptr)
+		if (gameObjectManager.get("player1") != nullptr)
 		{
-			if (gameObjectManager.get("character")->getPosition().x > 175)
+			if (gameObjectManager.get("player1")->getPosition().x > 175)
 			{
-				window.setView(sf::View(sf::Vector2f(gameObjectManager.get("character")->getPosition().x + 350, window.getSize().y / 2), sf::Vector2f(window.getSize())));
+				window.setView(sf::View(sf::Vector2f(gameObjectManager.get("player1")->getPosition().x + 350, window.getSize().y / 2), sf::Vector2f(window.getSize())));
 			}
 		}
 		gameObjectManager.drawAll(window);

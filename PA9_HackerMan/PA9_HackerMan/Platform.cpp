@@ -3,10 +3,10 @@
 Platform::Platform() 
 	: GameObject("platform.png")
 {
-	load();
+	load("platform.png");
 	getSprite().setOrigin(getSprite().getGlobalBounds().width / 2, getSprite().getGlobalBounds().height / 2);
 }
 
-void Platform::update(float timeLastUpdate, sf::Event event, map<string, GameObject*> gameObjects) {
+void Platform::update(float timeLastUpdate, sf::Event event, map<string, pair<string, GameObject*>> gameObjects) {
 
 }

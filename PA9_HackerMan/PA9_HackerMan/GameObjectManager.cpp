@@ -41,8 +41,8 @@ Function: add()
 Date Created: November 27, 2017
 Date Last Modified: Novemver 27, 2017
 
-Description: adds a new object associated with a key to the 
-			 container
+Description: adds a new object associated with a key and type
+			 to the container.
 
 			 key must be unique
 
@@ -53,8 +53,8 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void GameObjectManager::add(std::string name, GameObject* gameObject) {
-	gameObjects.insert(std::pair<std::string, GameObject*>(name, gameObject));
+void GameObjectManager::add(string name, string type, GameObject* gameObject) {
+	gameObjects.insert(pair<string, pair<string, GameObject*>>(name, pair<string, GameObject*>(type, gameObject)));
 }
 
 /*************************************************************
@@ -71,11 +71,11 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void GameObjectManager::remove(std::string name) {
-	std::map<std::string, GameObject*>::iterator results = gameObjects.find(name);
+void GameObjectManager::remove(string name) {
+	map<string, pair<string, GameObject*>>::iterator results = gameObjects.find(name);
 	if (results != gameObjects.end())
 	{
-		delete results->second;
+		delete results->second.second;
 		gameObjects.erase(results);
 	}
 }
@@ -95,12 +95,12 @@ Preconditions:
 Postconditions:
 *************************************************************/
 GameObject* GameObjectManager::get(std::string name) const {
-	std::map<std::string, GameObject*>::const_iterator results = gameObjects.find(name);
+	map<string, pair<string, GameObject*>>::const_iterator results = gameObjects.find(name);
 	if (results == gameObjects.end())
 	{
 		return nullptr;
 	}
-	return results->second;
+	return results->second.second;
 }
 
 /*************************************************************
@@ -137,10 +137,10 @@ Postconditions:
 *************************************************************/
 void GameObjectManager::drawAll(sf::RenderWindow &window)
 {
-	std::map<std::string, GameObject*>::const_iterator itr = gameObjects.begin();
+	map<string, pair<string, GameObject*>>::const_iterator itr = gameObjects.begin();
 	while (itr != gameObjects.end())
 	{
-		itr->second->draw(window);
+		itr->second.second->draw(window);
 		itr++;
 	}
 }
@@ -161,13 +161,13 @@ Preconditions:
 Postconditions:
 *************************************************************/
 void GameObjectManager::updateAll(sf::Event &event) {
-	std::map<std::string, GameObject*>::const_iterator itr = gameObjects.begin();
+	map<string, pair<string, GameObject*>>::const_iterator itr = gameObjects.begin();
 	sf::Time timeDelta = mTimeSinceLastUpdate.getElapsedTime();
 	mTimeSinceLastUpdate.restart();
 
 	while (itr != gameObjects.end())
 	{
-		itr->second->update(timeDelta.asSeconds(), event, gameObjects);
+		itr->second.second->update(timeDelta.asSeconds(), event, gameObjects);
 		itr++;
 	}
 }

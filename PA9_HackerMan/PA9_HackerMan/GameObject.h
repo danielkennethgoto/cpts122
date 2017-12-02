@@ -19,15 +19,16 @@ status: functional
 
 using std::string;
 using std::map;
+using std::pair;
 
 class GameObject {
 public:
 	GameObject(string fileName);
 	~GameObject();
 
-	virtual void load();
+	virtual void load(string fileName);
 	virtual void draw(sf::RenderWindow &window);
-	virtual void update(float timeLastUpdate, sf::Event event, map<string, GameObject*> gameObjects) = 0;
+	virtual void update(float timeLastUpdate, sf::Event event, map<string, pair<string, GameObject*>> gameObjects) = 0;
 
 	virtual void setPosition(float x, float y);
 	virtual void setPosition(sf::Vector2f newPosition);
@@ -44,6 +45,5 @@ protected:
 private:
 	sf::Sprite mSprite;
 	sf::Texture mImage;
-	string mFileName; //path to sprite image
 	bool mIsLoaded; //is image loaded
 };

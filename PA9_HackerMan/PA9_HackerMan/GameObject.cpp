@@ -15,7 +15,7 @@ Preconditions:
 Postconditions: 
 *************************************************************/
 GameObject::GameObject(string fileName)
-	: mIsLoaded{ false }, mFileName{ fileName }
+	: mIsLoaded{ false }
 {
 
 }
@@ -52,8 +52,8 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void GameObject::load() {
-	if (mImage.loadFromFile(mFileName)) //check if file successfully loaded
+void GameObject::load(string fileName) {
+	if (mImage.loadFromFile(fileName)) //check if file successfully loaded
 	{
 		mSprite.setTexture(mImage);
 		mIsLoaded = true;
@@ -101,7 +101,7 @@ Returns:
 Preconditions: must be overriden in derived classes
 Postconditions:
 *************************************************************/
-void GameObject::update(float timeLastUpdate, sf::Event event, map<string, GameObject*> gameObjects) {
+void GameObject::update(float timeLastUpdate, sf::Event event, map<string, pair<string, GameObject*>> gameObjects) {
 
 }
 
