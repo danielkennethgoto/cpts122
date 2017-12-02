@@ -4,9 +4,10 @@ Character::Character()
 	: GameObject::GameObject("stickman.png"),
 	jump{ false },
 	deltaY{ 0 },
+	deltaX{0},
 	velocityX{ 0 },
-	vy0{0},
-	vy{0},
+	velocityY0{0},
+	velocityY{0},
 	freeFallTime{0}
 
 {
@@ -15,7 +16,7 @@ Character::Character()
 }
 
 void Character::update(float timeLastUpdate, sf::Event event, map<string, GameObject*> gameObjects) {
-	GameObject* platform = gameObjects.find("platform")->second;
+	GameObject* platform = gameObjects.find("platform")->second;//get pointer to platform
 	
 	if (sf::Event::KeyPressed == event.type)
 	{
@@ -50,39 +51,53 @@ void Character::update(float timeLastUpdate, sf::Event event, map<string, GameOb
 		}
 	}
 	
-	if (jump)
+	if (jump && freeFallTime == 0)
 	{
-		vy0 = jumpVelocity;
+		velocityY0 = jumpVelocity;//should be a function setVelocityY0(jumpVelocity)
 	}
 
+	//should be a funciton updateFreeFallTime()
 	//update freefall
 	freeFallTime += timeLastUpdate;
-	deltaY = 0.5 * vy0 * freeFallTime + 0.5 * g * freeFallTime * freeFallTime;
+	//should be function updateYKinematics();
+	deltaY = 0.5 * velocityY0 * freeFallTime + 0.5 * acceleration * freeFallTime * freeFallTime;
+	velocityY = velocityY0 + acceleration * freeFallTime;
 
+	//function to update deltaX
+	deltaX = velocityX * timeLastUpdate;
+
+	//update position
+	getSprite().move(deltaX, deltaY);
+
+	//check new location collisions
 	//if on ground
 	if (getPosition().y > GameEngine::GROUND - getHeight() / 2 - 1)
 	{
 		setPosition(getPosition().x, GameEngine::GROUND - getHeight() / 2 - 1);
 		freeFallTime = 0;
-		vy0 = 0;
-		deltaY = 0;
+		velocityY0 = 0;
 	}
 
+	//should be own function, glitch when platform is less than a char height from other plaform but top of char is within height of platform
 	//if jumping onto platform
 	for (int i = 0; i < 2; i++)
 	{
 		if (getBoundingRect().intersects(platform->getBoundingRect()))
 		{
-			if (getPosition().y + getHeight() / 2 <= platform->getBoundingRect().top + platform->getHeight())
+			//land on platform
+			if (getPosition().y + getHeight() / 2 <= platform->getBoundingRect().top + platform->getHeight()
+				&& velocityY >= 0)
 			{
 				setPosition(getPosition().x, platform->getBoundingRect().top - getHeight() / 2);
 				freeFallTime = 0;
-				vy0 = 0;
-				deltaY = 0;
+				velocityY0 = 0;
 			}
-			else if (getPosition().y - getHeight()/2 > platform->getBoundingRect().top + platform->getHeight())
+			//hit platfrom from underneath
+			else if (getPosition().y - getHeight() / 2 >= platform->getBoundingRect().top
+				&& velocityY <= 0)
 			{
-
+				setPosition(getPosition().x, platform->getBoundingRect().top + platform->getHeight() + getHeight() / 2);
+				velocityY0 = 0;
 			}
 			else
 			{
@@ -99,7 +114,7 @@ void Character::update(float timeLastUpdate, sf::Event event, map<string, GameOb
 		platform = gameObjects.find("platform2")->second;
 	}
 
-	getSprite().move(velocityX * timeLastUpdate, deltaY);
+	
 
 	
 }

@@ -73,7 +73,7 @@ void GameEngine::startGame() {
 	gameObjectManager.add("platform", platform);
 
 	platform = new Platform;
-	platform->setPosition(gameObjectManager.get("platform")->getPosition().x + 200, GROUND - 100);
+	platform->setPosition(gameObjectManager.get("platform")->getPosition().x + 150, GROUND - 100);
 	gameObjectManager.add("platform2", platform);
 
 	image.loadFromFile("plainBackground.png");
