@@ -54,5 +54,6 @@ private:
 
 	sf::Texture computerpng;
 	sf::Sprite computersprite;
+	sf::Color color;
 };
 

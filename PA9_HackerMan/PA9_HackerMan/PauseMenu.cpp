@@ -1,20 +1,8 @@
-#include "Menu.h"
+#include "PauseMenu.h"
 
-/*************************************************************
-Function: Menu() <<constructor>>
-Date Created: November 29, 2017
-Date Last Modified: Novemver 30, 2017
 
-Description:
 
-status:
-
-Input parameters: sf::RenderWindow window
-Returns:
-Preconditions: window is opended, font file must be included(needs to be added) inside project!!!
-Postconditions:
-*************************************************************/
-Menu::Menu(sf::RenderWindow &window)
+PauseMenu::PauseMenu(sf::RenderWindow &window)
 {
 	if (!font.loadFromFile("arial.ttf"))//this is for loading the font for the text
 	{
@@ -22,8 +10,7 @@ Menu::Menu(sf::RenderWindow &window)
 		std::cout << "File Wasn't Loaded" << std::endl;
 		system("pause");
 	}
-
-	if (!computerpng.loadFromFile("gamebackground.png")) {
+	if (!computerpng.loadFromFile("bitbackground.png")) {
 		std::cout << "Picture File Wasn't Loaded" << std::endl;
 	}
 	computersprite.setTexture(computerpng);
@@ -40,22 +27,16 @@ Menu::Menu(sf::RenderWindow &window)
 	Title.setCharacterSize(OPTIONSIZE * 1.5);
 
 	Options[0].setFont(font);
-	Options[0].setString("Play");
+	Options[0].setString("Resume");
 	Options[0].setColor(sf::Color::White);
-	Options[0].setPosition(window.getSize().x / 2.5, window.getSize().y / 4);
+	Options[0].setPosition(window.getSize().x /3, window.getSize().y / 4);
 	Options[0].setCharacterSize(OPTIONSIZE);
 
 	Options[1].setFont(font);
-	Options[1].setString("Help");
+	Options[1].setString("Controls");
 	Options[1].setColor(color);
-	Options[1].setPosition(window.getSize().x / 2.5, window.getSize().y / 2);
+	Options[1].setPosition(window.getSize().x / 3, window.getSize().y / 2);
 	Options[1].setCharacterSize(OPTIONSIZE);
-
-	Options[2].setFont(font);
-	Options[2].setString("Credits");
-	Options[2].setColor(color);
-	Options[2].setPosition(window.getSize().x / 2.5, window.getSize().y * 3 / 4);
-	Options[2].setCharacterSize(OPTIONSIZE);
 
 	sf::Vector2f shapesize(300, 100);
 
@@ -67,19 +48,19 @@ Menu::Menu(sf::RenderWindow &window)
 	optionshapes[1].setPosition(Options[1].getPosition());//set it to the same position as its corresponding option
 	optionshapes[1].setSize(shapesize);
 
-	optionshapes[2].setFillColor(sf::Color::Transparent);
-	optionshapes[2].setPosition(Options[2].getPosition());//set it to the same position as its corresponding option
-	optionshapes[2].setSize(shapesize);
 
 	window.draw(optionshapes[0]);
 	window.draw(optionshapes[1]);
-	window.draw(optionshapes[2]);
+	
 	window.draw(Title);
 	window.draw(Options[0]);
 	window.draw(Options[1]);
-	window.draw(Options[2]);
 }
 
+
+PauseMenu::~PauseMenu()
+{
+}
 
 /*************************************************************
 Function: selectOption
@@ -95,7 +76,7 @@ Returns:
 Preconditions: window is opended, font file must be included(needs to be added) inside project!!!
 Postconditions:
 *************************************************************/
-void Menu::selectOption(sf::RenderWindow &window)
+void PauseMenu::selectOption(sf::RenderWindow &window)
 {
 	/*while (window.isOpen())
 	{*/
@@ -125,11 +106,6 @@ void Menu::selectOption(sf::RenderWindow &window)
 					std::cout << "Help Button Pressed" << std::endl;
 					drawHelp(window);
 				}
-				else if (insideRectangle(window, optionshapes[2]))
-				{
-					std::cout << "Credit Button Pressed" << std::endl;
-					drawCredits(window);
-				}
 				break;
 			case sf::Event::KeyReleased:
 				switch (event.key.code)
@@ -150,23 +126,20 @@ void Menu::selectOption(sf::RenderWindow &window)
 			}
 
 		}
-
 		window.clear();
 		DrawAll(window);
 		window.display();
 	}
 }
 
-void Menu::DrawAll(sf::RenderWindow &window)
+void PauseMenu::DrawAll(sf::RenderWindow &window)
 {
-	window.draw(computersprite);
+	//window.draw(computersprite);
 	window.draw(optionshapes[0]);
 	window.draw(optionshapes[1]);
-	window.draw(optionshapes[2]);
 	window.draw(Title);
 	window.draw(Options[0]);
 	window.draw(Options[1]);
-	window.draw(Options[2]);
 }
 
 /*************************************************************
@@ -183,12 +156,12 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Menu::SelectUp()
+void PauseMenu::SelectUp()
 {
 	if (OptionSelected == 0)//so the options can roll over
 	{
 		Options[OptionSelected].setColor(color);
-		OptionSelected = 2;
+		OptionSelected = 1;
 		Options[OptionSelected].setColor(sf::Color::White);
 	}
 	else
@@ -212,9 +185,9 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Menu::SelectDown()
+void PauseMenu::SelectDown()
 {
-	if (OptionSelected == 2)
+	if (OptionSelected == 1)
 	{
 		Options[OptionSelected].setColor(color);
 		OptionSelected = 0;
@@ -245,112 +218,17 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Menu::SelectEnter(sf::RenderWindow &window, int &enter)
+void PauseMenu::SelectEnter(sf::RenderWindow &window, int &enter)
 {
 	if (OptionSelected == 0)//Play
 	{
 		std::cout << "Play Button Pressed" << std::endl;
 		enter = 1;
-		window.clear();
 	}
 	else if (OptionSelected == 1)//Help
 	{
 		std::cout << "Help Button Pressed" << std::endl;
 		drawHelp(window);
-	}
-	else//Credits
-	{
-		std::cout << "Credit Button Pressed" << std::endl;
-		drawCredits(window);
-
-	}
-}
-
-Menu::~Menu()
-{
-}
-
-/*************************************************************
-Function: drawCredits()
-Date Created: December 1, 2017
-Date Last Modified: December 1, 2017
-
-Description: This function instantiates the text for the credits page and draws it to the screen
-
-status: complete
-
-Input parameters: sf::RenderWindow &window
-Returns:
-Preconditions: window is opened
-Postconditions:
-*************************************************************/
-void Menu::drawCredits(sf::RenderWindow &window)
-{
-
-	//Credits Title
-	names[0].setFont(font);
-	names[0].setString("Credits");
-	names[0].setColor(color);
-	names[0].setPosition(window.getSize().x / 6, window.getSize().y / 20);
-	names[0].setCharacterSize(CreditSize * 1.5);
-
-	//Reid Reininger - Game Engine/Object Manager
-	names[1].setFont(font);
-	names[1].setString("Reid Reininger - Game Engine/Object Manager");
-	names[1].setColor(color);
-	names[1].setPosition(window.getSize().x / 6, window.getSize().y / 5);
-	names[1].setCharacterSize(CreditSize);
-	//Daniel Goto - Artwork/Main Character
-	names[2].setFont(font);
-	names[2].setString("Daniel Goto - Artwork/Main Character");
-	names[2].setColor(color);
-	names[2].setPosition(window.getSize().x / 6, window.getSize().y * 3 / 10);
-	names[2].setCharacterSize(CreditSize);
-	//Patrick McCornack - Obstacles
-	names[3].setFont(font);
-	names[3].setString("Patrick McCornack - Obstacles");
-	names[3].setColor(color);
-	names[3].setPosition(window.getSize().x / 6, window.getSize().y * 2 / 5);
-	names[3].setCharacterSize(CreditSize);
-	//Andrew Feistner - Menus
-	names[4].setFont(font);
-	names[4].setString("Andrew Feistner - Menus");
-	names[4].setColor(color);
-	names[4].setPosition(window.getSize().x / 6, window.getSize().y / 2);
-	names[4].setCharacterSize(CreditSize);
-	int enter = 0;
-	while (enter == 0)
-	{
-
-		window.clear();
-		for (int i = 0; i < 5; i++)
-		{
-			window.draw(names[i]);
-		}
-		window.display();
-
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			switch (event.type)
-			{
-			case sf::Event::Closed:
-				window.close();
-				break;
-			case sf::Event::KeyReleased:
-				switch (event.key.code)
-				{
-				case sf::Keyboard::Return:
-					enter = 1;
-					break;
-					break;
-				}
-			case  sf::Event::MouseButtonPressed:
-				enter = 1;
-				break;
-
-			}
-		}
 	}
 }
 
@@ -368,8 +246,10 @@ Returns:
 Preconditions: window is opened
 Postconditions:
 *************************************************************/
-void Menu::drawHelp(sf::RenderWindow &window)
+void PauseMenu::drawHelp(sf::RenderWindow &window)
 {
+	
+
 	//Rules Title
 	rules[0].setFont(font);
 	rules[0].setString("Controls");
@@ -404,8 +284,11 @@ void Menu::drawHelp(sf::RenderWindow &window)
 	int enter = 0;
 	while (enter == 0)
 	{
-
 		window.clear();
+		//setTextTransparent();
+		//DrawAll(window);
+
+		setTextVisible_Rules();
 		for (int i = 0; i < 5; i++)
 		{
 			window.draw(rules[i]);
@@ -435,6 +318,9 @@ void Menu::drawHelp(sf::RenderWindow &window)
 			}
 		}
 	}
+	//setTextTransparent_Rules();
+	//setTextVisible();
+	window.clear();
 }
 
 /*************************************************************
@@ -451,7 +337,7 @@ Returns: true if mouse is inside the rectangle, false if not inside the rectangl
 Preconditions: window is opened
 Postconditions:
 *************************************************************/
-bool Menu::insideRectangle(sf::RenderWindow &window, sf::RectangleShape &Rectangle)
+bool PauseMenu::insideRectangle(sf::RenderWindow &window, sf::RectangleShape &Rectangle)
 {
 	if (sf::Mouse::getPosition(window).x >= Rectangle.getPosition().x //leftmost side
 		&& sf::Mouse::getPosition(window).x <= Rectangle.getPosition().x + Rectangle.getSize().x //rightmost side
@@ -465,3 +351,36 @@ bool Menu::insideRectangle(sf::RenderWindow &window, sf::RectangleShape &Rectang
 		return false;
 	}
 }
+
+void PauseMenu::setTextVisible()
+{
+	Title.setColor(color);
+	Options[0].setColor(sf::Color::White);
+	Options[1].setColor(color);
+}
+
+void PauseMenu::setTextTransparent()
+{
+	Title.setColor(sf::Color::Transparent);
+	Options[0].setColor(sf::Color::Transparent);
+	Options[1].setColor(sf::Color::Transparent);
+}
+
+void PauseMenu::setTextVisible_Rules()
+{
+	
+	rules[0].setColor(color);
+	rules[1].setColor(color);
+	rules[2].setColor(color);
+	rules[3].setColor(color);
+	
+}
+
+void PauseMenu::setTextTransparent_Rules()
+{
+	rules[0].setColor(sf::Color::Transparent);
+	rules[1].setColor(sf::Color::Transparent);
+	rules[2].setColor(sf::Color::Transparent);
+	rules[3].setColor(sf::Color::Transparent);
+}
+

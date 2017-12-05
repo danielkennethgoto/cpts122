@@ -78,6 +78,8 @@ void GameEngine::startGame() {
 	image.loadFromFile("electronicBackground.png");
 	backgroundSprite.setTexture(image);
 
+	showMainMenu();
+
 	gameState = GameState::PLAYING;
 
 	while (!isExiting())
@@ -144,4 +146,45 @@ Postconditions:
 *************************************************************/
 bool GameEngine::isExiting() const {
 	return (GameState::EXITING == gameState) ? true : false;
+}
+
+/*************************************************************
+Function: pause()
+Date Created: December 5, 2017
+Date Last Modified: December 5, 2017
+
+Description: Displays the pauseMenu
+
+status: INCOMPLETE!! DOES NOT PAUSE THE GAME YET
+
+Input parameters:
+Returns:
+Preconditions:
+Postconditions:
+*************************************************************/
+void GameEngine::pause()
+{
+	PauseMenu pauseMenu(window);
+	pauseMenu.selectOption(window);
+
+}
+
+/*************************************************************
+Function: showMainMenu()
+Date Created: December 5, 2017
+Date Last Modified: December 5, 2017
+
+Description: Displays the Main Menu
+
+status: Complete
+
+Input parameters:
+Returns:
+Preconditions:
+Postconditions:
+*************************************************************/
+void GameEngine::showMainMenu()
+{
+	Menu menu(window);
+	menu.selectOption(window);
 }
