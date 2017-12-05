@@ -64,13 +64,13 @@ void GameEngine::startGame() {
 
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Hacker Man!");
 	//allocate objects
-	Character* character = new Character;
-	NewCharacter* character2 = new NewCharacter;
+	NewCharacter* character = new NewCharacter;
+	//NewCharacter* character2 = new NewCharacter;
 	newGUI = new GUI;
 	character->setPosition(character->getWidth() * 2, SCREEN_HEIGHT / 2);
-	character2->setPosition(character2->getWidth() * 2, SCREEN_HEIGHT / 2);
+	//character2->setPosition(character2->getWidth() * 2, SCREEN_HEIGHT / 2);
 	gameObjectManager.add("player1", "character", character);
-	gameObjectManager.add("player2", "character", character2);
+	//gameObjectManager.add("player2", "character", character2);
 	Platform* platform = new Platform;
 	platform->setPosition(SCREEN_WIDTH / 2, GROUND - 50);
 	gameObjectManager.add("platform1", "platform", platform);
