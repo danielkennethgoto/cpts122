@@ -21,7 +21,7 @@ status: coding
 
 #define	SET_SCREEN_WIDTH 1024
 #define SET_SCREEN_HEIGHT 768
-#define SET_GROUND 500
+#define SET_GROUND 548
 
 class GameEngine {
 public:
