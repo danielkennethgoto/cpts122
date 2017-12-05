@@ -4,18 +4,15 @@
 Function: GameEngine() <<constructor>>
 Date Created: November 29, 2017
 Date Last Modified: Novemver 29, 2017
-
 Description: sets gameState to UNINITIALIZED
-
 status: functional
-
 Input parameters:
 Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
 GameEngine::GameEngine()
-	: gameState {GameState::UNINITIALIZED}
+	: gameState{ GameState::UNINITIALIZED }
 {
 
 }
@@ -24,11 +21,8 @@ GameEngine::GameEngine()
 Function: ~GameEngine() <<destructor>>
 Date Created: November 29, 2017
 Date Last Modified: Novemver 29, 2017
-
 Description: default
-
 status: functional
-
 Input parameters:
 Returns:
 Preconditions:
@@ -42,14 +36,10 @@ GameEngine::~GameEngine() {
 Function: ~GameEngine() <<destructor>>
 Date Created: November 29, 2017
 Date Last Modified: Novemver 29, 2017
-
 Description: -public function that coordinates GameEngines
-			  private functions to make the game run
-
-			 -throws exeption if called more than once
-
+private functions to make the game run
+-throws exeption if called more than once
 status: coding
-
 Input parameters:
 Returns:
 Preconditions: this function may only be called once
@@ -63,9 +53,25 @@ void GameEngine::startGame() {
 
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Hacker Man!");
 	//allocate objects
+	Menu* menu = new Menu(window);
+ 
 	Character* character = new Character;
 	character->setPosition(character->getWidth() * 2, SCREEN_HEIGHT / 2);
 	gameObjectManager.add("player1", "character", character);
+
+	Bug* bug = new Bug;
+	bug->setPosition(SCREEN_WIDTH * 1.5, GROUND - 50);
+	gameObjectManager.add("bug1", "bug", bug);
+
+	Wall* wall = new Wall;
+	string key = "wall";
+	wall->setPosition(SCREEN_WIDTH, GROUND - 150); 
+	wall->setAttributes(2, 2, true);
+	if (wall->getDoesDamage() == true) //Distinguishes between wall and firewall
+	{
+		key = "firewall";
+	}
+	gameObjectManager.add("wall1", key, wall);
 
 	Platform* platform = new Platform;
 	platform->setPosition(SCREEN_WIDTH / 2, GROUND - 50);
@@ -77,6 +83,8 @@ void GameEngine::startGame() {
 
 	image.loadFromFile("electronicBackground.png");
 	backgroundSprite.setTexture(image);
+
+	showMainMenu();
 
 	gameState = GameState::PLAYING;
 
@@ -90,11 +98,8 @@ void GameEngine::startGame() {
 Function: gameLoop()
 Date Created: November 29, 2017
 Date Last Modified: Novemver 29, 2017
-
 Description: main game loop
-
 status: coding
-
 Input parameters:
 Returns:
 Preconditions:
@@ -102,8 +107,9 @@ Postconditions:
 *************************************************************/
 void GameEngine::gameLoop() {
 	window.pollEvent(event);
-	
+
 	switch (gameState) {
+		
 	case GameState::PLAYING:
 		window.clear();
 		window.draw(backgroundSprite);
@@ -120,7 +126,7 @@ void GameEngine::gameLoop() {
 		window.display();
 		break;
 	}
-	
+
 	//if the close button is pushed
 	if (sf::Event::Closed == event.type)
 	{
@@ -132,11 +138,8 @@ void GameEngine::gameLoop() {
 Function: isExiting()
 Date Created: November 29, 2017
 Date Last Modified: Novemver 29, 2017
-
 Description: returns true if gameState is EXITING
-
 status: functional
-
 Input parameters:
 Returns:
 Preconditions:
@@ -144,4 +147,39 @@ Postconditions:
 *************************************************************/
 bool GameEngine::isExiting() const {
 	return (GameState::EXITING == gameState) ? true : false;
+}
+
+/*************************************************************
+Function: pause()
+Date Created: December 5, 2017
+Date Last Modified: December 5, 2017
+Description: Displays the pauseMenu
+status: INCOMPLETE!! DOES NOT PAUSE THE GAME YET
+Input parameters:
+Returns:
+Preconditions:
+Postconditions:
+*************************************************************/
+void GameEngine::pause()
+{
+	PauseMenu pauseMenu(window);
+	pauseMenu.selectOption(window);
+
+}
+
+/*************************************************************
+Function: showMainMenu()
+Date Created: December 5, 2017
+Date Last Modified: December 5, 2017
+Description: Displays the Main Menu
+status: Complete
+Input parameters:
+Returns:
+Preconditions:
+Postconditions:
+*************************************************************/
+void GameEngine::showMainMenu()
+{
+	Menu menu(window);
+	menu.selectOption(window);
 }

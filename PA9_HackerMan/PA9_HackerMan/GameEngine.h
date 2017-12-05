@@ -1,22 +1,24 @@
-/*******************************************************************************************
-Programmer: Reid Reininger (charles.reininger@wsu.edu)
-Class: CptS 122, Fall  2017; Lab Section 11
-Programming Assignment: PA9_HackerMan
-Date Started: November 29, 2017
-Last Update: November 29, 2017
-
-file: gameEngine.h
-
-Description: Runs the game. Does not include a main menu.
-
-status: coding
-*******************************************************************************************/
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "GameObjectManager.h"
 #include <cassert>
 #include "Character.h"
 #include "Platform.h"
+#include "Bug.h"
+#include "Wall.h"
+#include "Menu.h"
+#include "PauseMenu.h"
+
+/*******************************************************************************************
+Programmer: Reid Reininger (charles.reininger@wsu.edu)
+Class: CptS 122, Fall  2017; Lab Section 11
+Programming Assignment: PA9_HackerMan
+Date Started: November 29, 2017
+Last Update: November 29, 2017
+file: gameEngine.h
+Description: Runs the game. Does not include a main menu.
+status: coding
+*******************************************************************************************/
 
 #define	SET_SCREEN_WIDTH 1024
 #define SET_SCREEN_HEIGHT 768
