@@ -17,15 +17,16 @@ height as a platform and right next to the platform
 #pragma once
 #include "GameObject.h"
 
-class Character : public GameObject {
+class NewCharacter : public GameObject {
 public:
-	Character();
-	~Character() = default;
+	NewCharacter();
+	~NewCharacter() = default;
 
 	void update(float timeLastUpdate, sf::Event event, map<string, pair<string, GameObject*>> gameObjects);
 
 private:
 	//kinematic variables
+	void updateSprite(void);
 	bool jump;
 	float freeFallTime;
 	float velocityX;
@@ -39,14 +40,14 @@ private:
 	const float maxVelocityX = 300;
 	const float acceleration = 50; //acceleration due to gravity
 	const float jumpVelocity = -20;
-
 	//update functions
 	void updateInput(sf::Event event);
 	void updateFreeFallTime(float timeLastUpdate);
 	void updateYKinematics(float timeLastUpdate);
 	void updateXKinematics(float timeLastUpdate);
-
+	string currentSprite;
 	//collision functions
+	bool ismoving;
 	void checkCollisionGround();
 	void checkCollisionPlatform(map<string, pair<string, GameObject*>>);
 };

@@ -9,8 +9,8 @@ file: GameObject.h
 
 Description: abstract class from which all game objects must derive
 
-			 inspired by "Game From Scratch C++ and SFML Edition!" tutorial at
-			 http://www.gamefromscratch.com/page/Game-From-Scratch-CPP-Edition.aspx
+inspired by "Game From Scratch C++ and SFML Edition!" tutorial at
+http://www.gamefromscratch.com/page/Game-From-Scratch-CPP-Edition.aspx
 
 status: functional
 *******************************************************************************************/
@@ -38,12 +38,17 @@ public:
 	virtual float getWidth() const;
 	virtual float getHeight() const;
 	virtual sf::Rect<float> getBoundingRect() const;
-
+	virtual void setNewTexture(int);
+	sf::Texture mImage;
+	sf::Texture mImage2;
+	sf::Texture mImage3;
+	sf::Texture mImage4;
+	sf::Texture mImage5;
+	sf::Texture mImage6;
 protected:
 	sf::Sprite& getSprite();
 
 private:
 	sf::Sprite mSprite;
-	sf::Texture mImage;
 	bool mIsLoaded; //is image loaded
 };

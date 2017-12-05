@@ -12,7 +12,7 @@ status: functional
 Input parameters:
 Returns:
 Preconditions:
-Postconditions: 
+Postconditions:
 *************************************************************/
 GameObject::GameObject(string fileName)
 	: mIsLoaded{ false }
@@ -35,7 +35,7 @@ Preconditions:
 Postconditions:
 *************************************************************/
 GameObject::~GameObject() {
-	
+
 }
 
 /*************************************************************
@@ -61,6 +61,27 @@ void GameObject::load(string fileName) {
 	else
 	{
 		mIsLoaded = false;
+	}
+}
+
+void GameObject::setNewTexture(int number) {
+	if (number == 1) {
+		mSprite.setTexture(mImage);
+	}
+	if (number == 2) {
+		mSprite.setTexture(mImage2);
+	}
+	if (number == 3) {
+		mSprite.setTexture(mImage3);
+	}
+	if (number == 4) {
+		mSprite.setTexture(mImage4);
+	}
+	if (number == 5) {
+		mSprite.setTexture(mImage5);
+	}
+	if (number == 6) {
+		mSprite.setTexture(mImage6);
 	}
 }
 
@@ -91,8 +112,8 @@ Date Created: November 27, 2017
 Date Last Modified: Novemver 27, 2017
 
 Description: pure virtual function. Updates the object based
-			 on time since last frame update, event in queue,
-			 and properties of other objects
+on time since last frame update, event in queue,
+and properties of other objects
 
 status: functional
 
@@ -177,7 +198,7 @@ status: functional
 Input parameters:
 Returns: true if sprite image successfully loaded
 Preconditions:
-Postconditions: 
+Postconditions:
 *************************************************************/
 bool GameObject::isLoaded() const {
 	return (mIsLoaded) ? true : false;
@@ -189,7 +210,7 @@ Date Created: November 27, 2017
 Date Last Modified: Novemver 27, 2017
 
 Description: -returns width of object as a float
-			 -accounts for rotations
+-accounts for rotations
 
 status: functional
 
@@ -208,7 +229,7 @@ Date Created: November 27, 2017
 Date Last Modified: Novemver 27, 2017
 
 Description: -returns height of object as a float
-			 -accounts for rotations
+-accounts for rotations
 
 status: functional
 
@@ -245,7 +266,7 @@ Date Created: November 28, 2017
 Date Last Modified: Novemver 28, 2017
 
 Description: protected function to allow inherited classes
-			 to access the sprite
+to access the sprite
 
 status: functional
 

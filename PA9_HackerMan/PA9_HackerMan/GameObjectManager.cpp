@@ -42,9 +42,9 @@ Date Created: November 27, 2017
 Date Last Modified: Novemver 27, 2017
 
 Description: adds a new object associated with a key and type
-			 to the container.
+to the container.
 
-			 key must be unique
+key must be unique
 
 status: functional
 
@@ -151,7 +151,7 @@ Date Created: November 27, 2017
 Date Last Modified: Novemver 27, 2017
 
 Description: sends message to all GameObjects in container to
-			 update
+update
 
 status: functional
 

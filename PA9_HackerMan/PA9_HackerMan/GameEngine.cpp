@@ -1,4 +1,5 @@
 #include "GameEngine.h"
+#include "NewCharacter.h"
 
 /*************************************************************
 Function: GameEngine() <<constructor>>
@@ -15,7 +16,7 @@ Preconditions:
 Postconditions:
 *************************************************************/
 GameEngine::GameEngine()
-	: gameState {GameState::UNINITIALIZED}
+	: gameState{ GameState::UNINITIALIZED }
 {
 
 }
@@ -44,9 +45,9 @@ Date Created: November 29, 2017
 Date Last Modified: Novemver 29, 2017
 
 Description: -public function that coordinates GameEngines
-			  private functions to make the game run
+private functions to make the game run
 
-			 -throws exeption if called more than once
+-throws exeption if called more than once
 
 status: coding
 
@@ -64,9 +65,12 @@ void GameEngine::startGame() {
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Hacker Man!");
 	//allocate objects
 	Character* character = new Character;
+	NewCharacter* character2 = new NewCharacter;
+	newGUI = new GUI;
 	character->setPosition(character->getWidth() * 2, SCREEN_HEIGHT / 2);
+	character2->setPosition(character2->getWidth() * 2, SCREEN_HEIGHT / 2);
 	gameObjectManager.add("player1", "character", character);
-
+	gameObjectManager.add("player2", "character", character2);
 	Platform* platform = new Platform;
 	platform->setPosition(SCREEN_WIDTH / 2, GROUND - 50);
 	gameObjectManager.add("platform1", "platform", platform);
@@ -74,7 +78,6 @@ void GameEngine::startGame() {
 	platform = new Platform;
 	platform->setPosition(gameObjectManager.get("platform1")->getPosition().x + 150, GROUND - 100);
 	gameObjectManager.add("platform2", "platform", platform);
-
 	image.loadFromFile("electronicBackground.png");
 	backgroundSprite.setTexture(image);
 
@@ -102,7 +105,7 @@ Postconditions:
 *************************************************************/
 void GameEngine::gameLoop() {
 	window.pollEvent(event);
-	
+
 	switch (gameState) {
 	case GameState::PLAYING:
 		window.clear();
@@ -117,10 +120,11 @@ void GameEngine::gameLoop() {
 			}
 		}
 		gameObjectManager.drawAll(window);
+		newGUI->update(100, window, gameObjectManager.get("player1")->getPosition().x,0);
 		window.display();
 		break;
 	}
-	
+
 	//if the close button is pushed
 	if (sf::Event::Closed == event.type)
 	{

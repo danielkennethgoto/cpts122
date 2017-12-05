@@ -17,6 +17,7 @@ status: coding
 #include <cassert>
 #include "Character.h"
 #include "Platform.h"
+#include "GUI.h"
 
 #define	SET_SCREEN_WIDTH 1024
 #define SET_SCREEN_HEIGHT 768
@@ -52,7 +53,7 @@ private:
 	sf::Event event;
 	GameObjectManager gameObjectManager;
 	//PauseMenu; once it's built
-
+	GUI* newGUI;
 	sf::Sprite backgroundSprite;
 	sf::Texture image;
 };

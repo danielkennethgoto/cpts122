@@ -1,4 +1,4 @@
-#include "Character.h"
+#include "NewCharacter.h"
 #include "GameEngine.h"
 
 /*************************************************************
@@ -15,8 +15,8 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-Character::Character()
-	: GameObject::GameObject("stickman.png"),
+NewCharacter::NewCharacter()
+	: GameObject::GameObject("walkingright1.png"),
 	jump{ false },
 	deltaY{ 0 },
 	deltaX{ 0 },
@@ -26,7 +26,13 @@ Character::Character()
 	freeFallTime{ 0 }
 
 {
-	load("stickman.png");
+	currentSprite = "walkingright1.png";
+	load("walkingright1.png");
+	mImage2.loadFromFile("walkingright2.png");
+	mImage3.loadFromFile("walkingright3.png");
+	mImage4.loadFromFile("walkingleft1.png");
+	mImage5.loadFromFile("walkingleft2.png");
+	mImage6.loadFromFile("walkingleft3.png");
 	getSprite().setOrigin(getSprite().getGlobalBounds().width / 2, getSprite().getGlobalBounds().height / 2);
 	getSprite().setScale(2, 2);
 }
@@ -45,9 +51,11 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Character::update(float timeLastUpdate, sf::Event event, map<string, pair<string, GameObject*>> gameObjects) {
+void NewCharacter::update(float timeLastUpdate, sf::Event event, map<string, pair<string, GameObject*>> gameObjects) {
 	updateInput(event);
-
+	if (ismoving) {
+		updateSprite();
+	}
 	updateXKinematics(timeLastUpdate);
 	updateYKinematics(timeLastUpdate);
 
@@ -57,7 +65,33 @@ void Character::update(float timeLastUpdate, sf::Event event, map<string, pair<s
 	checkCollisionPlatform(gameObjects);
 }
 
+void NewCharacter::updateSprite(void) {
+	if (currentSprite == "walkingright1") {
+		currentSprite = "walkingright2";
+		setNewTexture(2);
+	}
+	else if (currentSprite == "walkingright2") {
+		currentSprite = "walkingright3";
+		setNewTexture(3);
+	}
+	else if (currentSprite == "walkingright3") {
+		currentSprite = "walkingright1";
+		setNewTexture(1);
+	}
+	if (currentSprite == "walkingleft1") {
+		currentSprite = "walkingleft2";
+		setNewTexture(5);
+	}
+	else if (currentSprite == "walkingleft2") {
+		currentSprite = "walkingleft3";
+		setNewTexture(6);
+	}
+	else if (currentSprite == "walkingleft3") {
+		currentSprite = "walkingleft1";
+		setNewTexture(4);
+	}
 
+}
 
 /*************************************************************
 Function: updateInput()
@@ -73,7 +107,7 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Character::updateInput(sf::Event event) {
+void NewCharacter::updateInput(sf::Event event) {
 	if (sf::Event::KeyPressed == event.type)
 	{
 		if (sf::Keyboard::Space == event.key.code)
@@ -83,11 +117,15 @@ void Character::updateInput(sf::Event event) {
 		if (sf::Keyboard::A == event.key.code)
 		{
 			velocityX = -1 * maxVelocityX;
+			ismoving = true;
+			currentSprite = "walkingleft1";
 		}
 
 		if (sf::Keyboard::D == event.key.code)
 		{
 			velocityX = maxVelocityX;
+			ismoving = true;
+			currentSprite = "walkingright1";
 		}
 	}
 
@@ -100,10 +138,14 @@ void Character::updateInput(sf::Event event) {
 		if (sf::Keyboard::A == event.key.code && velocityX < 0)
 		{
 			velocityX = 0;
+			lastdeltaX = -1;
+			ismoving = false;
 		}
 		if (sf::Keyboard::D == event.key.code && velocityX > 0)
 		{
 			velocityX = 0;
+			lastdeltaX = 1;
+			ismoving = false;
 		}
 	}
 }
@@ -122,7 +164,7 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Character::updateFreeFallTime(float timeLastUpdate) {
+void NewCharacter::updateFreeFallTime(float timeLastUpdate) {
 	freeFallTime += timeLastUpdate;
 }
 
@@ -140,7 +182,7 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Character::updateYKinematics(float timeLastUpdate) {
+void NewCharacter::updateYKinematics(float timeLastUpdate) {
 	if (jump && freeFallTime == 0)
 	{
 		velocityY0 = jumpVelocity;//should be a function setVelocityY0(jumpVelocity)
@@ -164,7 +206,7 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Character::updateXKinematics(float timeLastUpdate) {
+void NewCharacter::updateXKinematics(float timeLastUpdate) {
 	deltaX = velocityX * timeLastUpdate;
 }
 
@@ -182,7 +224,7 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Character::checkCollisionGround() {
+void NewCharacter::checkCollisionGround() {
 	if (getPosition().y > GameEngine::GROUND - getHeight() / 2 - 1)
 	{
 		setPosition(getPosition().x, GameEngine::GROUND - getHeight() / 2 - 1);
@@ -208,7 +250,7 @@ Returns:
 Preconditions:
 Postconditions:
 *************************************************************/
-void Character::checkCollisionPlatform(map<string, pair<string, GameObject*>> gameObjects) {
+void NewCharacter::checkCollisionPlatform(map<string, pair<string, GameObject*>> gameObjects) {
 	GameObject* platform = nullptr;
 	map<string, pair<string, GameObject*>>::const_iterator itr = gameObjects.begin();
 	while (itr != gameObjects.end())

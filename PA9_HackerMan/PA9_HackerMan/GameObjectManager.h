@@ -8,15 +8,16 @@ Last Update: November 27, 2017
 file: GameObjectManager.h
 
 Description: container to manage all of the programs GameObjects; sends objects draw and
-			 delete messages
+delete messages
 
-			 inspired by "Game From Scratch C++ and SFML Edition!" tutorial at
-			 http://www.gamefromscratch.com/page/Game-From-Scratch-CPP-Edition.aspx
+inspired by "Game From Scratch C++ and SFML Edition!" tutorial at
+http://www.gamefromscratch.com/page/Game-From-Scratch-CPP-Edition.aspx
 
 status: functional
 *******************************************************************************************/
 #pragma once
 #include "GameObject.h"
+#include "GUI.h"
 using std::string;
 using std::map;
 using std::pair;
