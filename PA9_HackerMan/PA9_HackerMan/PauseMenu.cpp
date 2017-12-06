@@ -259,25 +259,25 @@ void PauseMenu::drawHelp(sf::RenderWindow &window)
 
 
 	rules[1].setFont(font);
-	rules[1].setString(" a button - go left");
+	rules[1].setString("\"a\" or \"left\" - go left");
 	rules[1].setColor(color);
 	rules[1].setPosition(window.getSize().x / 6, window.getSize().y / 5);
 	rules[1].setCharacterSize(CreditSize);
 
 	rules[2].setFont(font);
-	rules[2].setString("d button - go right");
+	rules[2].setString("\"d\" or \"right\"  - go right");
 	rules[2].setColor(color);
 	rules[2].setPosition(window.getSize().x / 6, window.getSize().y * 3 / 10);
 	rules[2].setCharacterSize(CreditSize);
 
 	rules[3].setFont(font);
-	rules[3].setString("space bar - jump");
+	rules[3].setString("space bar or \"w\" - jump");
 	rules[3].setColor(color);
 	rules[3].setPosition(window.getSize().x / 6, window.getSize().y * 2 / 5);
 	rules[3].setCharacterSize(CreditSize);
 
 	rules[4].setFont(font);
-	rules[4].setString("");
+	rules[4].setString("escape - pause menu");
 	rules[4].setColor(/*sf::Color::*/color);
 	rules[4].setPosition(window.getSize().x / 6, window.getSize().y / 2);
 	rules[4].setCharacterSize(CreditSize);

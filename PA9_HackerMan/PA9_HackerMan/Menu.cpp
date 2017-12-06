@@ -385,25 +385,25 @@ void Menu::drawHelp(sf::RenderWindow &window)
 
 
 	rules[1].setFont(font);
-	rules[1].setString("\"a\" or \"left button\" - go left");
+	rules[1].setString("\"a\" or \"left\" - go left");
 	rules[1].setColor(color);
 	rules[1].setPosition(window.getSize().x / 6, window.getSize().y / 5);
 	rules[1].setCharacterSize(CreditSize);
 
 	rules[2].setFont(font);
-	rules[2].setString("d button or left button - go right");
+	rules[2].setString("\"d\" or \"right\"  - go right");
 	rules[2].setColor(color);
 	rules[2].setPosition(window.getSize().x / 6, window.getSize().y * 3 / 10);
 	rules[2].setCharacterSize(CreditSize);
 
 	rules[3].setFont(font);
-	rules[3].setString("space bar - jump");
+	rules[3].setString("space bar or \"w\" - jump");
 	rules[3].setColor(color);
 	rules[3].setPosition(window.getSize().x / 6, window.getSize().y * 2 / 5);
 	rules[3].setCharacterSize(CreditSize);
 
 	rules[4].setFont(font);
-	rules[4].setString("");
+	rules[4].setString("escape - pause menu");
 	rules[4].setColor(/*sf::Color::*/color);
 	rules[4].setPosition(window.getSize().x / 6, window.getSize().y / 2);
 	rules[4].setCharacterSize(CreditSize);
@@ -491,7 +491,7 @@ void Menu::DisplayStoryText(sf::RenderWindow &window)
 	sf::Text story;
 
 	story.setFont(font);
-	story.setString("Dear HackerMan,\n\n\n I forgot to turn in PA9. Your mission is to hack \ninto the OSBLE Site.You must traverse through the \nsite and place my PA9 into the\n turn in folder.\n\n Thank you,\nCS 122 Student");
+	story.setString("HackerMan,\n\nI forgot to turn in PA9. Your mission is to hack\ninto the OSBLE Site, make it past the firewall\nand place my PA9 into the turn in folder.\n\nGodspeed!");
 	story.setColor(color);
 	story.setPosition(window.getSize().x / 10, window.getSize().y / 12);
 	story.setCharacterSize(CreditSize);

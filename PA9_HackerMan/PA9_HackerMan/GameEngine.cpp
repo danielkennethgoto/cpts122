@@ -125,10 +125,10 @@ void GameEngine::gameLoop() {
 		newGUI->update(100, window, gameObjectManager.get("player1")->getPosition().x,0);
 		window.display();
 		break;
-	/*case GameState::PAUSE:
+	case GameState::PAUSE:
 		pause();
 		gameState = GameState::PLAYING;
-		break;*/
+		break;
 	}
 
 	//if the close button is pushed
@@ -136,7 +136,7 @@ void GameEngine::gameLoop() {
 	{
 		gameState = GameState::EXITING;
 	}
-	/*if (sf::Event::KeyReleased == event.type)
+	if (sf::Event::KeyPressed == event.type)
 	{
 		switch (event.key.code)
 		{
@@ -144,7 +144,7 @@ void GameEngine::gameLoop() {
 			gameState = GameState::PAUSE;
 			break;
 		}
-	}*/
+	}
 }
 
 /*************************************************************
