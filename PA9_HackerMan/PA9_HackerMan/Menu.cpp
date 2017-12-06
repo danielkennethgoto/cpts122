@@ -140,6 +140,12 @@ void Menu::selectOption(sf::RenderWindow &window)
 				case sf::Keyboard::Up:
 					SelectUp();//moves selction up
 					break;
+				case sf::Keyboard::W:
+					SelectUp();//moves selction up
+					break;
+				case sf::Keyboard::S:
+					SelectDown();//moves selction down
+					break;
 				case sf::Keyboard::Down:
 					SelectDown();//moves selction down
 					break;
@@ -379,13 +385,13 @@ void Menu::drawHelp(sf::RenderWindow &window)
 
 
 	rules[1].setFont(font);
-	rules[1].setString(" a button - go left");
+	rules[1].setString("\"a\" or \"left button\" - go left");
 	rules[1].setColor(color);
 	rules[1].setPosition(window.getSize().x / 6, window.getSize().y / 5);
 	rules[1].setCharacterSize(CreditSize);
 
 	rules[2].setFont(font);
-	rules[2].setString("d button - go right");
+	rules[2].setString("d button or left button - go right");
 	rules[2].setColor(color);
 	rules[2].setPosition(window.getSize().x / 6, window.getSize().y * 3 / 10);
 	rules[2].setCharacterSize(CreditSize);
@@ -464,4 +470,89 @@ bool Menu::insideRectangle(sf::RenderWindow &window, sf::RectangleShape &Rectang
 	{
 		return false;
 	}
+}
+
+/*************************************************************
+Function: DisplayStoryText()
+Date Created: December 5, 2017
+Date Last Modified: December 5, 2017
+
+Description: This function displays text that tells the story of the game
+
+status: complete
+
+Input parameters: sf::RenderWindow &window
+Returns: true if mouse is inside the rectangle, false if not inside the rectangle
+Preconditions: window is opened
+Postconditions:
+*************************************************************/
+void Menu::DisplayStoryText(sf::RenderWindow &window)
+{	
+	sf::Text story;
+
+	story.setFont(font);
+	story.setString("Dear HackerMan,\n\n\n I forgot to turn in PA9. Your mission is to hack \ninto the OSBLE Site.You must traverse through the \nsite and place my PA9 into the\n turn in folder.\n\n Thank you,\nCS 122 Student");
+	story.setColor(color);
+	story.setPosition(window.getSize().x / 10, window.getSize().y / 12);
+	story.setCharacterSize(CreditSize);
+
+
+	//story[1].setFont(font);
+	//story[1].setString("");
+	//story[1].setColor(color);
+	//story[1].setPosition(window.getSize().x / 6, window.getSize().y / 5);
+	//story[1].setCharacterSize(CreditSize);
+
+	//story[2].setFont(font);
+	//story[2].setString("");
+	//story[2].setColor(color);
+	//story[2].setPosition(window.getSize().x / 6, window.getSize().y * 3 / 10);
+	//story[2].setCharacterSize(CreditSize);
+
+	//story[3].setFont(font);
+	//story[3].setString("");
+	//story[3].setColor(color);
+	//story[3].setPosition(window.getSize().x / 6, window.getSize().y * 2 / 5);
+	//story[3].setCharacterSize(CreditSize);
+
+	//story[4].setFont(font);
+	//story[4].setString("");
+	//story[4].setColor(/*sf::Color::*/color);
+	//story[4].setPosition(window.getSize().x / 6, window.getSize().y / 2);
+	//story[4].setCharacterSize(CreditSize);
+	int enter = 0;
+	
+
+		window.clear();
+		/*for (int i = 0; i < 5; i++)
+		{*/
+		window.draw(story);
+		
+
+		window.display();
+		while (enter == 0)
+		{
+			sf::Event event;
+			while (window.pollEvent(event))
+			{
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					window.close();
+					enter = 1;
+					break;
+				case sf::Event::KeyReleased:
+					switch (event.key.code)
+					{
+					case sf::Keyboard::Return:
+						enter = 1;
+						break;
+						break;
+					}
+				case  sf::Event::MouseButtonPressed:
+					enter = 1;
+					break;
+				}
+			}
+		}
 }

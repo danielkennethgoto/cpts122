@@ -40,6 +40,8 @@ public:
 
 	bool insideRectangle(sf::RenderWindow &window, sf::RectangleShape &Rectangle);
 
+	void DisplayStoryText(sf::RenderWindow &window);
+		
 private:
 	int OptionSelected;
 
