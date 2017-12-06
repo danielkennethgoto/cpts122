@@ -110,18 +110,22 @@ Postconditions:
 void NewCharacter::updateInput(sf::Event event) {
 	if (sf::Event::KeyPressed == event.type)
 	{
-		if (sf::Keyboard::Space == event.key.code)
+		if (sf::Keyboard::Space == event.key.code
+			|| sf::Keyboard::W == event.key.code
+			|| sf::Keyboard::Up == event.key.code)
 		{
 			jump = true;
 		}
-		if (sf::Keyboard::A == event.key.code)
+		if (sf::Keyboard::A == event.key.code
+			|| sf::Keyboard::Left == event.key.code)
 		{
 			velocityX = -1 * maxVelocityX;
 			ismoving = true;
 			currentSprite = "walkingleft1";
 		}
 
-		if (sf::Keyboard::D == event.key.code)
+		if (sf::Keyboard::D == event.key.code
+			|| sf::Keyboard::Right == event.key.code)
 		{
 			velocityX = maxVelocityX;
 			ismoving = true;
@@ -131,17 +135,23 @@ void NewCharacter::updateInput(sf::Event event) {
 
 	if (sf::Event::KeyReleased == event.type)
 	{
-		if (sf::Keyboard::Space == event.key.code)
+		if (sf::Keyboard::Space == event.key.code
+			|| sf::Keyboard::W == event.key.code
+			|| sf::Keyboard::Up == event.key.code)
 		{
 			jump = false;
 		}
-		if (sf::Keyboard::A == event.key.code && velocityX < 0)
+		if ((sf::Keyboard::A == event.key.code
+			|| sf::Keyboard::Left == event.key.code
+			) && velocityX < 0)
 		{
 			velocityX = 0;
 			lastdeltaX = -1;
 			ismoving = false;
 		}
-		if (sf::Keyboard::D == event.key.code && velocityX > 0)
+		if ((sf::Keyboard::D == event.key.code
+			|| sf::Keyboard::Right == event.key.code
+			) && velocityX > 0)
 		{
 			velocityX = 0;
 			lastdeltaX = 1;
