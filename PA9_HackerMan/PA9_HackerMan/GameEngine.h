@@ -8,6 +8,7 @@
 #include "Wall.h"
 #include "Menu.h"
 #include "PauseMenu.h"
+#include "Goal.h"
 
 /*******************************************************************************************
 Programmer: Reid Reininger (charles.reininger@wsu.edu)

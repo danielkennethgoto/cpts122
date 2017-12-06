@@ -59,6 +59,10 @@ void GameEngine::startGame() {
 	character->setPosition(character->getWidth() * 2, SCREEN_HEIGHT / 2);
 	gameObjectManager.add("player1", "character", character);
 
+	Goal* goal = new Goal;
+	goal->setPosition(SCREEN_WIDTH * 2, GROUND - 50);
+	gameObjectManager.add("goal1", "goal", goal);
+
 	Bug* bug = new Bug;
 	bug->setPosition(SCREEN_WIDTH * 1.5, GROUND - 50);
 	gameObjectManager.add("bug1", "bug", bug);
@@ -66,11 +70,8 @@ void GameEngine::startGame() {
 	Wall* wall = new Wall;
 	string key = "wall";
 	wall->setPosition(SCREEN_WIDTH, GROUND - 150); 
-	wall->setAttributes(2, 2, true);
-	if (wall->getDoesDamage() == true) //Distinguishes between wall and firewall
-	{
-		key = "firewall";
-	}
+	wall->setAttributes(2, 1, true);
+	key = wall->getKey();
 	gameObjectManager.add("wall1", key, wall);
 
 	Platform* platform = new Platform;
@@ -91,6 +92,10 @@ void GameEngine::startGame() {
 	while (!isExiting())
 	{
 		gameLoop();
+		if (goal->checkGoalReached() == true)
+		{
+			gameState = GameState::EXITING;
+		}
 	}
 }
 
@@ -122,6 +127,7 @@ void GameEngine::gameLoop() {
 				window.setView(sf::View(sf::Vector2f(gameObjectManager.get("player1")->getPosition().x + 350, window.getSize().y / 2), sf::Vector2f(window.getSize())));
 			}
 		}
+	
 		gameObjectManager.drawAll(window);
 		window.display();
 		break;

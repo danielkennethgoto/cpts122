@@ -51,6 +51,7 @@ private:
 	void checkCollisionPlatform(map<string, pair<string, GameObject*>> gameObjects);
 	void checkCollisionDanger(map<string, pair<string, GameObject*>> gameObjects);
 	void checkCollisionWall(map<string, pair<string, GameObject*>> gameObjects);
+	void checkCollisionGoal(map<string, pair<string, GameObject*>> gameObjects);
 };
 
 

@@ -42,6 +42,7 @@ void Wall::setAttributes(int newHeight, int newWidth, bool dangerous)
 	if (doesDamage == true)
 	{
 		load("fireWall.png");
+		key = "firewall";
 	}
 }
 
@@ -62,4 +63,25 @@ void Wall::update(float timeLastUpdate, sf::Event event, map<string, pair<string
 {
 	//Empty
 
+}
+
+/*************************************************************
+Function: getDoesDamage
+Date Created: December 3, 2017
+Date Last Modified:
+Description: Returns whether or not the wall is a firewall
+status: untested
+Input parameters:
+Returns:
+Preconditions: If it moves the wall should be tall
+Postconditions:
+*************************************************************/
+bool Wall::getDoesDamage()
+{
+	return this->doesDamage;
+}
+
+string Wall::getKey()
+{
+	return key;
 }

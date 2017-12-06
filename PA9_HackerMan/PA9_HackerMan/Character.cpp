@@ -344,8 +344,6 @@ Notes: Should probably adjust the offset values
 *************************************************************/
 void Character::checkHealth()
 {
-
-	int garbage = 0;
 	if (healthPoints == 1)
 	{
 		getSprite().setScale(1, 1);
@@ -353,15 +351,40 @@ void Character::checkHealth()
 	else if (healthPoints == 0)
 	{
 		//Game Over - for now just returns to start of level
-		//This is currently not functioning as intended
-
-		load("dead.png");
-		Sleep(1000);
+		//This is currently not functioning as intend
 
 		//Reset
 		healthPoints = 2;
-		setPosition(getWidth() * 2, 768 / 2); //768 is screen height -> hard coded :(
-		load("stickman.png");
+		Sleep(500);
+		setPosition(10, GameEngine::SCREEN_HEIGHT / 2);
 		getSprite().setScale(2, 2);
+		
+	}
+}
+
+void Character::checkCollisionGoal(map<string, pair<string, GameObject*>> gameObjects)
+{
+	GameObject* goal = nullptr;
+	map<string, pair<string, GameObject*>>::const_iterator itr = gameObjects.begin();
+	while (itr != gameObjects.end())
+	{
+		if ("goal" == itr->second.first)
+		{
+			goal = itr->second.second;
+
+			if (getBoundingRect().intersects(goal->getBoundingRect())) //Wall and bug collide
+			{
+
+				if (velocityX > 0 && getPosition().x < goal->getPosition().x)
+				{
+					setPosition(goal->getPosition().x - goal->getWidth() / 2 - getWidth() / 2, getPosition().y);
+				}
+				if (velocityX < 0 && getPosition().x > goal->getPosition().x)
+				{
+					setPosition(goal->getPosition().x + goal->getWidth() / 2 + getWidth() / 2, getPosition().y);
+				}
+			}
+		}
+		itr++;
 	}
 }
