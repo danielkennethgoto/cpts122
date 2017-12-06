@@ -1,4 +1,5 @@
 #include "Goal.h"
+#include <SFML/Graphics.hpp>
 
 /*************************************************************
 Function: Wall() -> Constructor
@@ -32,6 +33,7 @@ Postconditions:
 void Goal::update(float timeLastUpdate, sf::Event event, map<string, pair<string, GameObject*>> gameObjects)
 {
 	checkCollisionCharacter(gameObjects);
+
 }
 
 
@@ -59,5 +61,26 @@ void Goal::checkCollisionCharacter(map<string, pair<string, GameObject*>> gameOb
 		}
 		itr++;
 	}
+}
+
+void Goal::drawMessage(sf::RenderWindow &window)
+{
+	sf::Text message;
+	sf::Font font;
+	sf::Color newColor(50, 128, 0);
+
+	if (!font.loadFromFile("arial.ttf"))//this is for loading the font for the text
+	{
+		// file didn't load
+		std::cout << "File Wasn't Loaded" << std::endl;
+		system("pause");
+	}
+	message.setFont(font);
+	message.setString("Winner!");
+	message.setColor(newColor);
+	message.setPosition(this->getPosition().x, this->getPosition().y-350);
+	message.setCharacterSize(100);
+	window.draw(message);
+	window.display();
 }
 

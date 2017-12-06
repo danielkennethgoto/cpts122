@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <windows.h>
 #include "GameObjectManager.h"
 #include <cassert>
 #include "Character.h"
