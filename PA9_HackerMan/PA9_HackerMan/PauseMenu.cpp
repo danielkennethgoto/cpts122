@@ -1,0 +1,386 @@
+#include "PauseMenu.h"
+
+
+
+PauseMenu::PauseMenu(sf::RenderWindow &window)
+{
+	if (!font.loadFromFile("arial.ttf"))//this is for loading the font for the text
+	{
+		// file didn't load
+		std::cout << "File Wasn't Loaded" << std::endl;
+		system("pause");
+	}
+	if (!computerpng.loadFromFile("bitbackground.png")) {
+		std::cout << "Picture File Wasn't Loaded" << std::endl;
+	}
+	computersprite.setTexture(computerpng);
+	//computersprite.setPosition(window.getSize().x / 15, window.getSize().y / 2);
+	computersprite.setPosition(0, 0);
+
+	sf::Color newColor(0, 128, 0);
+	color = newColor;
+
+	Title.setFont(font);
+	Title.setString("HackerMan");
+	Title.setColor(color);
+	Title.setPosition(window.getSize().x / 6, window.getSize().y / 13);
+	Title.setCharacterSize(OPTIONSIZE * 1.5);
+
+	Options[0].setFont(font);
+	Options[0].setString("Resume");
+	Options[0].setColor(sf::Color::White);
+	Options[0].setPosition(window.getSize().x /3, window.getSize().y / 4);
+	Options[0].setCharacterSize(OPTIONSIZE);
+
+	Options[1].setFont(font);
+	Options[1].setString("Controls");
+	Options[1].setColor(color);
+	Options[1].setPosition(window.getSize().x / 3, window.getSize().y / 2);
+	Options[1].setCharacterSize(OPTIONSIZE);
+
+	sf::Vector2f shapesize(300, 100);
+
+	optionshapes[0].setFillColor(sf::Color::Transparent);
+	optionshapes[0].setPosition(Options[0].getPosition());//set it to the same position as its corresponding option
+	optionshapes[0].setSize(shapesize);
+
+	optionshapes[1].setFillColor(sf::Color::Transparent);
+	optionshapes[1].setPosition(Options[1].getPosition());//set it to the same position as its corresponding option
+	optionshapes[1].setSize(shapesize);
+
+
+	window.draw(optionshapes[0]);
+	window.draw(optionshapes[1]);
+	
+	window.draw(Title);
+	window.draw(Options[0]);
+	window.draw(Options[1]);
+}
+
+
+PauseMenu::~PauseMenu()
+{
+}
+
+/*************************************************************
+Function: selectOption
+Date Created: November 29, 2017
+Date Last Modified: Novemver 30, 2017
+
+Description: This function allows for the user to select up and down with the arrow keys and press enter to select a choice
+
+status: unfinished
+
+Input parameters: sf::RenderWindow window
+Returns:
+Preconditions: window is opended, font file must be included(needs to be added) inside project!!!
+Postconditions:
+*************************************************************/
+void PauseMenu::selectOption(sf::RenderWindow &window)
+{
+	/*while (window.isOpen())
+	{*/
+	OptionSelected = 0;
+	int enter = 0;//will change when enter is selected
+	while (enter == 0)
+	{
+
+
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case sf::Event::Closed:
+				window.close();
+				break;
+			case  sf::Event::MouseButtonPressed:
+				if (insideRectangle(window, optionshapes[0]))
+				{
+					std::cout << "Play Button Pressed" << std::endl;
+					enter = 1;
+					window.clear();
+				}
+				else if (insideRectangle(window, optionshapes[1]))
+				{
+					std::cout << "Help Button Pressed" << std::endl;
+					drawHelp(window);
+				}
+				break;
+			case sf::Event::KeyReleased:
+				switch (event.key.code)
+				{
+				case sf::Keyboard::Return:
+					SelectEnter(window, enter);
+					break;
+				case sf::Keyboard::Up:
+					SelectUp();//moves selction up
+					break;
+				case sf::Keyboard::Down:
+					SelectDown();//moves selction down
+					break;
+				default:
+					break;
+				}
+				break;
+			}
+
+		}
+		window.clear();
+		DrawAll(window);
+		window.display();
+	}
+}
+
+void PauseMenu::DrawAll(sf::RenderWindow &window)
+{
+	//window.draw(computersprite);
+	window.draw(optionshapes[0]);
+	window.draw(optionshapes[1]);
+	window.draw(Title);
+	window.draw(Options[0]);
+	window.draw(Options[1]);
+}
+
+/*************************************************************
+Function: SelectUP()
+Date Created: November 29, 2017
+Date Last Modified: Novemver 30, 2017
+
+Description: This function allows for the user to select up
+
+status:
+
+Input parameters:
+Returns:
+Preconditions:
+Postconditions:
+*************************************************************/
+void PauseMenu::SelectUp()
+{
+	if (OptionSelected == 0)//so the options can roll over
+	{
+		Options[OptionSelected].setColor(color);
+		OptionSelected = 1;
+		Options[OptionSelected].setColor(sf::Color::White);
+	}
+	else
+	{
+		Options[OptionSelected].setColor(color);
+		OptionSelected--;
+		Options[OptionSelected].setColor(sf::Color::White);
+	}
+}
+/*************************************************************
+Function: SelectDown()
+Date Created: November 29, 2017
+Date Last Modified: Novemver 30, 2017
+
+Description: This function allows for the user to select Down
+
+status:
+
+Input parameters:
+Returns:
+Preconditions:
+Postconditions:
+*************************************************************/
+void PauseMenu::SelectDown()
+{
+	if (OptionSelected == 1)
+	{
+		Options[OptionSelected].setColor(color);
+		OptionSelected = 0;
+		Options[OptionSelected].setColor(sf::Color::White);
+	}
+	else
+	{
+		Options[OptionSelected].setColor(color);
+		OptionSelected++;
+		Options[OptionSelected].setColor(sf::Color::White);
+	}
+}
+
+/*************************************************************
+Function: SelectEnter()
+Date Created: November 29, 2017
+Date Last Modified: Novemver 30, 2017
+
+Description: This function allows for the user to select their option
+if Play is pressed the menu closes
+if Help is pressed the rules are displayed
+if credits is pressed the credits are displayed
+
+status: complete
+
+Input parameters: sf::RenderWindow &window, int &enter
+Returns:
+Preconditions:
+Postconditions:
+*************************************************************/
+void PauseMenu::SelectEnter(sf::RenderWindow &window, int &enter)
+{
+	if (OptionSelected == 0)//Play
+	{
+		std::cout << "Play Button Pressed" << std::endl;
+		enter = 1;
+	}
+	else if (OptionSelected == 1)//Help
+	{
+		std::cout << "Help Button Pressed" << std::endl;
+		drawHelp(window);
+	}
+}
+
+/*************************************************************
+Function: drawHelp()
+Date Created: December 1, 2017
+Date Last Modified: December 1, 2017
+
+Description: This function instantiates the text for the help page and draws it to the screen
+
+status: complete
+
+Input parameters: sf::RenderWindow &window
+Returns:
+Preconditions: window is opened
+Postconditions:
+*************************************************************/
+void PauseMenu::drawHelp(sf::RenderWindow &window)
+{
+	
+
+	//Rules Title
+	rules[0].setFont(font);
+	rules[0].setString("Controls");
+	rules[0].setColor(color);
+	rules[0].setPosition(window.getSize().x / 6, window.getSize().y / 20);
+	rules[0].setCharacterSize(CreditSize * 1.5);
+
+
+	rules[1].setFont(font);
+	rules[1].setString(" a button - go left");
+	rules[1].setColor(color);
+	rules[1].setPosition(window.getSize().x / 6, window.getSize().y / 5);
+	rules[1].setCharacterSize(CreditSize);
+
+	rules[2].setFont(font);
+	rules[2].setString("d button - go right");
+	rules[2].setColor(color);
+	rules[2].setPosition(window.getSize().x / 6, window.getSize().y * 3 / 10);
+	rules[2].setCharacterSize(CreditSize);
+
+	rules[3].setFont(font);
+	rules[3].setString("space bar - jump");
+	rules[3].setColor(color);
+	rules[3].setPosition(window.getSize().x / 6, window.getSize().y * 2 / 5);
+	rules[3].setCharacterSize(CreditSize);
+
+	rules[4].setFont(font);
+	rules[4].setString("");
+	rules[4].setColor(/*sf::Color::*/color);
+	rules[4].setPosition(window.getSize().x / 6, window.getSize().y / 2);
+	rules[4].setCharacterSize(CreditSize);
+	int enter = 0;
+	while (enter == 0)
+	{
+		window.clear();
+		//setTextTransparent();
+		//DrawAll(window);
+
+		setTextVisible_Rules();
+		for (int i = 0; i < 5; i++)
+		{
+			window.draw(rules[i]);
+		}
+
+		window.display();
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case sf::Event::Closed:
+				window.close();
+				break;
+			case sf::Event::KeyReleased:
+				switch (event.key.code)
+				{
+				case sf::Keyboard::Return:
+					enter = 1;
+					break;
+					break;
+				}
+			case  sf::Event::MouseButtonPressed:
+				enter = 1;
+				break;
+
+			}
+		}
+	}
+	//setTextTransparent_Rules();
+	//setTextVisible();
+	window.clear();
+}
+
+/*************************************************************
+Function: insideRectangle()
+Date Created: December 3, 2017
+Date Last Modified: December 3, 2017
+
+Description: This function checks to see if the mouse curser is in the passed in rectangle
+
+status: complete
+
+Input parameters: sf::RenderWindow &window, sf::RectangleShape Rectangle
+Returns: true if mouse is inside the rectangle, false if not inside the rectangle
+Preconditions: window is opened
+Postconditions:
+*************************************************************/
+bool PauseMenu::insideRectangle(sf::RenderWindow &window, sf::RectangleShape &Rectangle)
+{
+	if (sf::Mouse::getPosition(window).x >= Rectangle.getPosition().x //leftmost side
+		&& sf::Mouse::getPosition(window).x <= Rectangle.getPosition().x + Rectangle.getSize().x //rightmost side
+		&& sf::Mouse::getPosition(window).y >= Rectangle.getPosition().y //top side
+		&& sf::Mouse::getPosition(window).y <= Rectangle.getPosition().y + Rectangle.getSize().y)//bottom side
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void PauseMenu::setTextVisible()
+{
+	Title.setColor(color);
+	Options[0].setColor(sf::Color::White);
+	Options[1].setColor(color);
+}
+
+void PauseMenu::setTextTransparent()
+{
+	Title.setColor(sf::Color::Transparent);
+	Options[0].setColor(sf::Color::Transparent);
+	Options[1].setColor(sf::Color::Transparent);
+}
+
+void PauseMenu::setTextVisible_Rules()
+{
+	
+	rules[0].setColor(color);
+	rules[1].setColor(color);
+	rules[2].setColor(color);
+	rules[3].setColor(color);
+	
+}
+
+void PauseMenu::setTextTransparent_Rules()
+{
+	rules[0].setColor(sf::Color::Transparent);
+	rules[1].setColor(sf::Color::Transparent);
+	rules[2].setColor(sf::Color::Transparent);
+	rules[3].setColor(sf::Color::Transparent);
+}
+
