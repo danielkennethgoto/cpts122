@@ -76,11 +76,14 @@ Postconditions:
 void Character::updateInput(sf::Event event) {
 	if (sf::Event::KeyPressed == event.type)
 	{
-		if (sf::Keyboard::Space == event.key.code)
+		if (sf::Keyboard::Space == event.key.code
+			|| sf::Keyboard::W == event.key.code
+			|| sf::Keyboard::Up == event.key.code)
 		{
 			jump = true;
 		}
-		if (sf::Keyboard::A == event.key.code)
+		if (sf::Keyboard::A == event.key.code
+			|| sf::Keyboard::Left == event.key.code)
 		{
 			velocityX = -1 * maxVelocityX;
 		}
