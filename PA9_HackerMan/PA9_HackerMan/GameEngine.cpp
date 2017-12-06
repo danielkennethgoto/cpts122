@@ -1,5 +1,6 @@
 #include "GameEngine.h"
 #include "NewCharacter.h"
+#include "Wall.h"
 
 /*************************************************************
 Function: GameEngine() <<constructor>>
@@ -64,13 +65,18 @@ void GameEngine::startGame() {
 
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Hacker Man!");
 	//allocate objects
-	NewCharacter* character = new NewCharacter;
-	//NewCharacter* character2 = new NewCharacter;
+	clock = new Clock;
+	Character* character = new Character;
+	NewCharacter* character2 = new NewCharacter;
 	newGUI = new GUI;
+	Wall* newWall = new Wall;
 	character->setPosition(character->getWidth() * 2, SCREEN_HEIGHT / 2);
-	//character2->setPosition(character2->getWidth() * 2, SCREEN_HEIGHT / 2);
+	character2->setPosition(character2->getWidth() * 2, SCREEN_HEIGHT / 2);
+	newWall->setPosition(100, 100);
+	newWall->setAttributes(10, 10, false);
 	gameObjectManager.add("player1", "character", character);
-	//gameObjectManager.add("player2", "character", character2);
+	gameObjectManager.add("player2", "character", character2);
+	gameObjectManager.add("wall", "wall", newWall);
 	Platform* platform = new Platform;
 	platform->setPosition(SCREEN_WIDTH / 2, GROUND - 50);
 	gameObjectManager.add("platform1", "platform", platform);
@@ -80,8 +86,6 @@ void GameEngine::startGame() {
 	gameObjectManager.add("platform2", "platform", platform);
 	image.loadFromFile("electronicBackground.png");
 	backgroundSprite.setTexture(image);
-
-	showMainMenu();
 
 	gameState = GameState::PLAYING;
 
@@ -122,7 +126,7 @@ void GameEngine::gameLoop() {
 			}
 		}
 		gameObjectManager.drawAll(window);
-		newGUI->update(100, window, gameObjectManager.get("player1")->getPosition().x,0);
+		newGUI->update(clock->getTime(), window, gameObjectManager.get("player1")->getPosition().x,0);
 		window.display();
 		break;
 	}
@@ -150,45 +154,4 @@ Postconditions:
 *************************************************************/
 bool GameEngine::isExiting() const {
 	return (GameState::EXITING == gameState) ? true : false;
-}
-
-/*************************************************************
-Function: pause()
-Date Created: December 5, 2017
-Date Last Modified: December 5, 2017
-
-Description: Displays the pauseMenu
-
-status: INCOMPLETE!! DOES NOT PAUSE THE GAME YET
-
-Input parameters:
-Returns:
-Preconditions:
-Postconditions:
-*************************************************************/
-void GameEngine::pause()
-{
-	PauseMenu pauseMenu(window);
-	pauseMenu.selectOption(window);
-
-}
-
-/*************************************************************
-Function: showMainMenu()
-Date Created: December 5, 2017
-Date Last Modified: December 5, 2017
-
-Description: Displays the Main Menu
-
-status: Complete
-
-Input parameters:
-Returns:
-Preconditions:
-Postconditions:
-*************************************************************/
-void GameEngine::showMainMenu()
-{
-	Menu menu(window);
-	menu.selectOption(window);
 }
