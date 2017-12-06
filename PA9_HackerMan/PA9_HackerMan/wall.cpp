@@ -15,10 +15,8 @@ Postconditions:
 *************************************************************/
 Wall::Wall() : GameObject::GameObject("bitWall.png")
 {
-	mImage2.loadFromFile("fireWall2.png");
 	load("bitWall.png");
-	currentSprite = 0;
-	getSprite().setOrigin(getSprite().getGlobalBounds().width / 2, getSprite().getGlobalBounds().height / 2);
+	getSprite().setOrigin(getSprite().getGlobalBounds().width / 2, getSprite().getGlobalBounds().height / 2); 
 	getSprite().setScale(1, 1);
 }
 
@@ -39,12 +37,11 @@ void Wall::setAttributes(int newHeight, int newWidth, bool dangerous)
 	this->heightScale = newHeight;
 	this->widthScale = newWidth;
 	this->doesDamage = dangerous;
+
 	getSprite().setScale(widthScale, heightScale);
 	if (doesDamage == true)
 	{
-		load("fireWall1.png");
-		currentSprite = 1;
-		key = "fireWall";
+		load("fireWall.png");
 	}
 }
 
@@ -54,7 +51,7 @@ void Wall::setAttributes(int newHeight, int newWidth, bool dangerous)
 Function: update()
 Date Created: December 3, 2017
 Date Last Modified:
-Description:
+Description: 
 status: untested
 Input parameters:
 Returns:
@@ -63,27 +60,6 @@ Postconditions:
 *************************************************************/
 void Wall::update(float timeLastUpdate, sf::Event event, map<string, pair<string, GameObject*>> gameObjects)
 {
-
-	if (currentSprite == 1) {
-		currentSprite = 2;
-		setNewTexture(1);
-		printf("Update");
-	}
-	else if (currentSprite ==2) {
-		currentSprite = 1;
-		setNewTexture(2);
-		printf("Update");
-	}
 	//Empty
 
-}
-
-bool Wall::getDoesDamage()
-{
-	return this->doesDamage;
-}
-
-string Wall::getKey()
-{
-	return key;
 }
