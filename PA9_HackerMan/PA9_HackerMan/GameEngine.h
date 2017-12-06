@@ -18,6 +18,8 @@ status: coding
 #include "Character.h"
 #include "Platform.h"
 #include "GUI.h"
+#include "Menu.h"
+#include "PauseMenu.h"
 
 #define	SET_SCREEN_WIDTH 1024
 #define SET_SCREEN_HEIGHT 768
