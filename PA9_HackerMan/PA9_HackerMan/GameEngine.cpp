@@ -1,5 +1,6 @@
 #include "GameEngine.h"
 #include "NewCharacter.h"
+#include "Wall.h"
 
 /*************************************************************
 Function: GameEngine() <<constructor>>
@@ -64,6 +65,7 @@ void GameEngine::startGame() {
 
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Hacker Man!");
 	//allocate objects
+	clock = new Clock;
 	NewCharacter* character = new NewCharacter;
 	//NewCharacter* character2 = new NewCharacter;
 	newGUI = new GUI;
@@ -122,7 +124,7 @@ void GameEngine::gameLoop() {
 			}
 		}
 		gameObjectManager.drawAll(window);
-		newGUI->update(100, window, gameObjectManager.get("player1")->getPosition().x,0);
+		newGUI->update(clock->getTime(), window, gameObjectManager.get("player1")->getPosition().x, 100);
 		window.display();
 		break;
 	case GameState::PAUSE:
