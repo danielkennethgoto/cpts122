@@ -18,6 +18,7 @@ status: coding
 #include "Character.h"
 #include "Platform.h"
 #include "GUI.h"
+#include "Clock.h"
 
 #define	SET_SCREEN_WIDTH 1024
 #define SET_SCREEN_HEIGHT 768
@@ -54,6 +55,7 @@ private:
 	GameObjectManager gameObjectManager;
 	//PauseMenu; once it's built
 	GUI* newGUI;
+	Clock* clock;
 	sf::Sprite backgroundSprite;
 	sf::Texture image;
 };

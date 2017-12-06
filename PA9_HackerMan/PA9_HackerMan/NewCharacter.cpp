@@ -34,7 +34,7 @@ NewCharacter::NewCharacter()
 	mImage5.loadFromFile("walkingleft2.png");
 	mImage6.loadFromFile("walkingleft3.png");
 	getSprite().setOrigin(getSprite().getGlobalBounds().width / 2, getSprite().getGlobalBounds().height / 2);
-	getSprite().setScale(.8, .8);
+	getSprite().setScale(2, 2);
 }
 
 /*************************************************************
