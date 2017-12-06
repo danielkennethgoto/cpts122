@@ -8,9 +8,9 @@ public:
 	float getTime();
 	void restart();
 private:
-
+	
 	sf::Clock* clock;
-
+	
 
 
 };
